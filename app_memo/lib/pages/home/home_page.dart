@@ -2,10 +2,13 @@ import 'package:app_memo/data/repository/memos_repository.dart';
 import 'package:app_memo/di.dart';
 import 'package:app_memo/domain/current_user.dart';
 import 'package:app_memo/domain/memo_domain_model.dart';
+import 'package:app_memo/pages/home/add_memo.dart';
+import 'package:app_memo/pages/home/memo_page.dart';
 import 'package:app_memo/pages/login/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -40,11 +43,11 @@ class _HomePageState extends State<HomePage> {
               try {
                 memosRepository.syncWithRemote();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Errore aggiornamento')),
+                  SnackBar(content: Text('Aggiornato con successo')),
                 );
               } catch (e) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Aggiornato con successo')),
+                  SnackBar(content: Text("Errore nell'aggiornamento")),
                 );
               }
             },
@@ -74,18 +77,9 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          memosRepository.insertMemo(
-            MemoDomainModel(
-              id: Uuid().v4(),
-              creator: 'filippoveggo@gmail.com',
-              title: 'titolo2',
-              tags: [
-                TagDomainModel(
-                  id: '',
-                  title: 'dfs',
-                )
-              ],
-              description: 'descrizione',
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => AddMemo(),
             ),
           );
         },
@@ -98,11 +92,70 @@ class _HomePageState extends State<HomePage> {
             return Center(
               child: CircularProgressIndicator(),
             );
+          } else if (snapshot.data.memos.isEmpty) {
+            return Center(
+              child: SvgPicture.asset('./assets/illustrations/404.svg'),
+            );
           }
           final memos = snapshot.data.memos;
           final tags = snapshot.data.tags;
 
-          return Text(tags.toString());
+          return ListView.builder(
+            itemCount: memos.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 2,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(12.0),
+                    color: Color.fromRGBO(188, 189, 192, 0.6),
+                  ),
+                  child: ListTile(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => MemoPage(
+                            memo: memos[index],
+                          ),
+                        ),
+                      );
+                    },
+                    title: Text(
+                      memos[index].title,
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    subtitle: Row(
+                      children: [
+                        Text(
+                          'Tags: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          memos[index]
+                              .tags
+                              .map((e) => e != null ? e.title : '')
+                              .join(', '),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
         },
       ),
     );
