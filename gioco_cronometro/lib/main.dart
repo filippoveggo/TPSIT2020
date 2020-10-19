@@ -52,12 +52,6 @@ class MyBottomNavigationBar extends StatefulWidget {
 
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    HomePage(),
-    GamePage(),
-    ChronoPage(),
-    TimerPage(),
-  ];
   void changePage(int index) {
     setState(() {
       _currentIndex = index;
@@ -67,7 +61,15 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _children[_currentIndex],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          HomePage(),
+          GamePage(),
+          ChronoPage(),
+          TimerPage(),
+        ],
+      ),
       bottomNavigationBar: BubbleBottomBar(
         opacity: 0,
         currentIndex: _currentIndex,
