@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gioco_cronometro/pages/home.dart';
+import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
+import 'package:gioco_cronometro/pages/chrono.dart';
+import 'package:gioco_cronometro/pages/game.dart';
+import 'package:gioco_cronometro/pages/timer.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark
-    ),
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark),
   );
 
   runApp(MyApp());
@@ -35,7 +38,72 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: MyBottomNavigationBar(),
+    );
+  }
+}
+
+class MyBottomNavigationBar extends StatefulWidget {
+  MyBottomNavigationBar({Key key}) : super(key: key);
+
+  @override
+  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
+}
+
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    HomePage(),
+    GamePage(),
+    ChronoPage(),
+    TimerPage(),
+  ];
+  void changePage(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _children[_currentIndex],
+      bottomNavigationBar: BubbleBottomBar(
+        opacity: 0,
+        currentIndex: _currentIndex,
+        onTap: changePage,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        elevation: 8,
+        hasNotch: true,
+        hasInk: true,
+        inkColor: Colors.black12,
+        items: <BubbleBottomBarItem>[
+          BubbleBottomBarItem(
+            backgroundColor: Colors.red,
+            icon: Icon(Icons.dashboard, color: Colors.black),
+            activeIcon: Icon(Icons.dashboard, color: Colors.red),
+            title: Text("Home"),
+          ),
+          BubbleBottomBarItem(
+            backgroundColor: Colors.deepPurple,
+            icon: Icon(Icons.play_arrow, color: Colors.black),
+            activeIcon: Icon(Icons.play_arrow, color: Colors.deepPurple),
+            title: Text("Gioco"),
+          ),
+          BubbleBottomBarItem(
+            backgroundColor: Colors.indigo,
+            icon: Icon(Icons.timer, color: Colors.black),
+            activeIcon: Icon(Icons.timer, color: Colors.indigo),
+            title: Text("Cronometro"),
+          ),
+          BubbleBottomBarItem(
+            backgroundColor: Colors.indigo,
+            icon: Icon(Icons.hourglass_bottom, color: Colors.black),
+            activeIcon: Icon(Icons.hourglass_top, color: Colors.green),
+            title: Text("Timer"),
+          ),
+        ],
+      ),
     );
   }
 }

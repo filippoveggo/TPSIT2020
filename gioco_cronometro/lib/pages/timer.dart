@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class HomePage extends StatefulWidget {
+class TimerPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _TimerPageState createState() => _TimerPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _TimerPageState extends State<TimerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
             width: 300.0,
             height: 300.0,
             decoration: new BoxDecoration(
-              color: Colors.orange,
+              color: Colors.black,
               shape: BoxShape.circle,
             ),
           ),

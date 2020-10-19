@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class HomePage extends StatefulWidget {
+class GamePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _GamePageState createState() => _GamePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

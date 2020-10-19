@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class HomePage extends StatefulWidget {
+class ChronoPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _ChronoPageState createState() => _ChronoPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ChronoPageState extends State<ChronoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
