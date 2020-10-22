@@ -16,12 +16,12 @@ class _HomePageState extends State<HomePage> {
   List colors = [Colors.red, Colors.green, Colors.yellow];
   Random random = new Random();
 
-  int index = 0;
-
   Future<int> randomColors() async {
     Random rnd = Random();
     int s = 200 + rnd.nextInt(500);
-    await Future.delayed(Duration(milliseconds: s), () => index = rnd.nextInt(3));
+    int index;
+    await Future.delayed(
+        Duration(milliseconds: s), () => index = rnd.nextInt(3));
     return index;
   }
 
@@ -31,14 +31,13 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
- //void startChangingColors() {
- //  Random rnd = new Random();
- //}
+  //void startChangingColors() {
+  //  Random rnd = new Random();
+  //}
 
-
- //void changeColors() {
- //  setState(() => index = random.nextInt(3));
- //}
+  //void changeColors() {
+  //  setState(() => index = random.nextInt(3));
+  //}
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +58,25 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          Spacer(),
+          //Spacer(),
           Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Container(
-                  width: 300.0,
-                  height: 300.0,
-                  decoration: new BoxDecoration(
-                    color: colors[index],
-                    shape: BoxShape.circle,
-                  ),
+                if (_buttonPressed)
+                StreamBuilder(
+                  stream: changeColors(),
+                  initialData: null,
+                  builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                    return Container(
+                      width: 300.0,
+                      height: 300.0,
+                      decoration: BoxDecoration(
+                        color: colors[snapshot.data],
+                        shape: BoxShape.circle,
+                      ),
+                    );
+                  },
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +93,12 @@ class _HomePageState extends State<HomePage> {
                             ),
                             child: IconButton(
                               icon: Icon(Icons.play_arrow, color: Colors.white),
-                              onPressed: () => changeColors(),
+                              onPressed: () {
+                                changeColors();
+                                setState(() {
+                                  _buttonPressed = false;
+                                });
+                              },
                             ),
                           ),
                         ],
@@ -105,7 +116,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             child: IconButton(
                               icon: Icon(Icons.pause, color: Colors.grey[700]),
-                              onPressed: () => {_buttonPressed = true},
+                              onPressed:() => setState((){
+                                _buttonPressed = true;
+                              })
                             ),
                           ),
                         ],
@@ -116,7 +129,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          Spacer(),
+          //Spacer(),
         ],
       ),
     ); //
