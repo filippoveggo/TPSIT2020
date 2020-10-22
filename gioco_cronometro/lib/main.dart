@@ -99,7 +99,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             title: Text("Cronometro"),
           ),
           BubbleBottomBarItem(
-            backgroundColor: Colors.indigo,
+            backgroundColor: Colors.green,
             icon: Icon(Icons.hourglass_bottom, color: Colors.black),
             activeIcon: Icon(Icons.hourglass_top, color: Colors.green),
             title: Text("Timer"),
