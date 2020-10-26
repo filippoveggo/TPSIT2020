@@ -27,16 +27,78 @@ class _GamePageState extends State<GamePage> {
               ),
             ),
           ),
-          Spacer(),
-          Container(
-            width: 300.0,
-            height: 300.0,
-            decoration: new BoxDecoration(
-              color: Colors.orange,
-              shape: BoxShape.circle,
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0.0, 35.0, 0.0, 50.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 150.0,
+                  height: 150.0,
+                  decoration: new BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                  ),
+                )
+              ],
             ),
           ),
-          Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 35.0),
+                    child: Container(
+                      //padding: EdgeInsets.all(20.0),
+                      //padding: EdgeInsets.only(bottom: 20.0),
+                      width: 150.0,
+                      height: 150.0,
+                      decoration: new BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 150.0,
+                    height: 150.0,
+                    decoration: new BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 35.0),
+                    child: Container(
+                      //padding: EdgeInsets.all(20.0),
+                      //padding: EdgeInsets.only(bottom: 20.0),
+                      width: 150.0,
+                      height: 150.0,
+                      decoration: new BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 150.0,
+                    height: 150.0,
+                    decoration: new BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     ); //
