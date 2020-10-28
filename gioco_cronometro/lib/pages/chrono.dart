@@ -8,6 +8,8 @@ class ChronoPage extends StatefulWidget {
 }
 
 class _ChronoPageState extends State<ChronoPage> {
+  String chronoTime = "00:00:00";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,16 +29,79 @@ class _ChronoPageState extends State<ChronoPage> {
               ),
             ),
           ),
-          Spacer(),
-          Container(
-            width: 300.0,
-            height: 300.0,
-            decoration: new BoxDecoration(
-              color: Colors.orange,
-              shape: BoxShape.circle,
+          Expanded(
+            flex: 5,
+            child: Container(
+              alignment: Alignment.center,
+              child: Text(
+                chronoTime,
+                style: TextStyle(
+                  fontSize: 50.0,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ),
           ),
-          Spacer(),
+          Expanded(
+            flex: 5,
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      RaisedButton(
+                        onPressed: () {},
+                        color: Colors.red,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 40.0,
+                          vertical: 15.0,
+                        ),
+                        child: Text(
+                          "Stop",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      RaisedButton(
+                        onPressed: () {},
+                        color: Colors.red,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 40.0,
+                          vertical: 15.0,
+                        ),
+                        child: Text(
+                          "Reset",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  RaisedButton(
+                    onPressed: () {},
+                    color: Colors.red,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 40.0,
+                      vertical: 15.0,
+                    ),
+                    child: Text(
+                      "Start",
+                      style: TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     ); //
