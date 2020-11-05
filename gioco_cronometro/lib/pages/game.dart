@@ -31,13 +31,13 @@ class _GamePageState extends State<GamePage> {
   }
 
   Future<int> randomColorToGuess() async {
-    Random rnd = Random();
-    int s = 200 + rnd.nextInt(500);
-    int index;
-    //await if () {
-      
-    //};
-    return index;
+    //Random rnd = Random();
+    //int s = 200 + rnd.nextInt(500);
+    //int index;
+    ////await if () {
+    //  
+    ////};
+    //return index;
   }
 
   Stream<int> colorToGuess() async* {
@@ -71,7 +71,7 @@ class _GamePageState extends State<GamePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 StreamBuilder(
-                  stream: colorToGuess(),
+                  stream: changeColors(),
                   initialData: 1,
                   builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
                     return Container(
