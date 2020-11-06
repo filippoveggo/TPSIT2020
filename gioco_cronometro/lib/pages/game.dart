@@ -35,11 +35,11 @@ class _GamePageState extends State<GamePage> {
     //int s = 200 + rnd.nextInt(500);
     //int index;
     ////await if () {
-    //  
+    //
     ////};
     //return index;
   }
-
+  
   Stream<int> colorToGuess() async* {
     while (_buttonPressed) {
       yield await randomColorToGuess();
