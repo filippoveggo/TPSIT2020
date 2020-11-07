@@ -20,7 +20,10 @@ class _ChronoPageState extends State<ChronoPage> {
   int counter = 0;
 
   Stream<int> timedCounter() async* {
+    // Durata di ogni tick
     Duration interval = Duration(seconds: 1);
+
+    // Fa partire il cronometro quando il bottone è true
     while (_buttonPressed) {
       await Future.delayed(interval);
       secondsStr = ((counter % 60)).floor().toString().padLeft(2, '0');
@@ -37,6 +40,7 @@ class _ChronoPageState extends State<ChronoPage> {
     var _resetOnPressed;
     var _pauseButtonPressed;
 
+    // Fa attivare solo i bottoni corretti
     if (_enable) {
       _startOnPressed = () {
         setState(() {
@@ -120,7 +124,6 @@ class _ChronoPageState extends State<ChronoPage> {
                           borderRadius: BorderRadius.circular(18.0),
                         ),
                       ),
-                      //SizedBox(width: 40.0),
                       RaisedButton(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 8.0),
@@ -137,7 +140,6 @@ class _ChronoPageState extends State<ChronoPage> {
                           borderRadius: BorderRadius.circular(18.0),
                         ),
                       ),
-                      //SizedBox(width: 40.0),
                       RaisedButton(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 8.0),

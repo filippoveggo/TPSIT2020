@@ -1,6 +1,6 @@
-# gioco_cronometro
+# chrono
 
-A new Flutter project.
+Primo progetto realizzato per approfondire l'uso delle stream in flutter.
 
 ## Getting Started
 
