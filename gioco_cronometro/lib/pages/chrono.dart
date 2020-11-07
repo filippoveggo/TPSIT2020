@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class ChronoPage extends StatefulWidget {
+  const ChronoPage({Key key}) : super(key: key);
+
   @override
   _ChronoPageState createState() => _ChronoPageState();
 }

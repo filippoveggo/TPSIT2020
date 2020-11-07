@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gioco_cronometro/pages/home.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:gioco_cronometro/pages/chrono.dart';
-import 'package:gioco_cronometro/pages/game.dart';
 import 'package:gioco_cronometro/pages/timer.dart';
 
 void main() {
@@ -22,6 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Gioco',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -64,7 +63,6 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
       body: IndexedStack(
         index: _currentIndex,
         children: [
-          HomePage(),
           ChronoPage(),
           TimerPage(),
         ],
@@ -79,15 +77,6 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         hasInk: true,
         inkColor: Colors.black12,
         items: <BubbleBottomBarItem>[
-          BubbleBottomBarItem(
-            backgroundColor: Color.fromRGBO(230, 57, 70, 1.0),
-            icon: Icon(Icons.dashboard, color: Colors.black),
-            activeIcon: Icon(
-              Icons.dashboard,
-              color: Color.fromRGBO(230, 57, 70, 1.0),
-            ),
-            title: Text("Home"),
-          ),
           BubbleBottomBarItem(
             backgroundColor: Colors.indigo,
             icon: Icon(Icons.timer, color: Colors.black),
