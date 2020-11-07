@@ -18,7 +18,7 @@ class _ChronoPageState extends State<ChronoPage> {
   int counter = 0;
 
   Stream<int> timedCounter() async* {
-    Duration interval = Duration(milliseconds: 1000);
+    Duration interval = Duration(seconds: 1);
     while (_buttonPressed) {
       await Future.delayed(interval);
       secondsStr = ((counter % 60)).floor().toString().padLeft(2, '0');
@@ -52,7 +52,9 @@ class _ChronoPageState extends State<ChronoPage> {
     }
     _resetOnPressed = () {
       setState(() {
-        _enable = !_enable;
+        if (!_enable) {
+          _enable = !_enable;
+        }
         _buttonPressed = false;
         counter = 0;
         hoursStr = '00';
@@ -77,14 +79,15 @@ class _ChronoPageState extends State<ChronoPage> {
               ),
             ),
           ),
+          Spacer(),
           Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 StreamBuilder(
                   stream: timedCounter(),
                   initialData: 0,
-                  builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                  builder:
+                      (BuildContext context, AsyncSnapshot<int> snapshot) {
                     return Text(
                       "$hoursStr:$minutesStr:$secondsStr",
                       style: TextStyle(
@@ -93,58 +96,71 @@ class _ChronoPageState extends State<ChronoPage> {
                     );
                   },
                 ),
-                SizedBox(height: 30.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    RaisedButton(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                      onPressed: _startOnPressed,
-                      color: Colors.green,
-                      child: Text(
-                        'START',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
+                Padding(
+                  padding: const EdgeInsets.only(top: 60.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      RaisedButton(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 8.0),
+                        onPressed: _startOnPressed,
+                        color: Colors.indigo,
+                        child: Text(
+                          'START',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 40.0),
-                    RaisedButton(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                      onPressed: _resetOnPressed,
-                      color: Colors.red,
-                      child: Text(
-                        'RESET',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
+                      //SizedBox(width: 40.0),
+                      RaisedButton(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 8.0),
+                        onPressed: _resetOnPressed,
+                        color: Color.fromRGBO(69, 123, 157, 1.0),
+                        child: Text(
+                          'RESET',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 40.0),
-                    RaisedButton(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                      onPressed: _pauseButtonPressed,
-                      color: Colors.red,
-                      child: Text(
-                        'PAUSE',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
+                      //SizedBox(width: 40.0),
+                      RaisedButton(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: 8.0),
+                        onPressed: _pauseButtonPressed,
+                        color: Color.fromRGBO(230, 57, 70, 1.0),
+                        child: Text(
+                          'PAUSE',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
+          Spacer(),
         ],
       ),
-    ); //
+    );
   }
 }
