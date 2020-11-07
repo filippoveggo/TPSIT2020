@@ -65,7 +65,6 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         index: _currentIndex,
         children: [
           HomePage(),
-          GamePage(),
           ChronoPage(),
           TimerPage(),
         ],
@@ -81,16 +80,13 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         inkColor: Colors.black12,
         items: <BubbleBottomBarItem>[
           BubbleBottomBarItem(
-            backgroundColor: Colors.red,
+            backgroundColor: Color.fromRGBO(230, 57, 70, 1.0),
             icon: Icon(Icons.dashboard, color: Colors.black),
-            activeIcon: Icon(Icons.dashboard, color: Colors.red),
+            activeIcon: Icon(
+              Icons.dashboard,
+              color: Color.fromRGBO(230, 57, 70, 1.0),
+            ),
             title: Text("Home"),
-          ),
-          BubbleBottomBarItem(
-            backgroundColor: Colors.deepPurple,
-            icon: Icon(Icons.play_arrow, color: Colors.black),
-            activeIcon: Icon(Icons.play_arrow, color: Colors.deepPurple),
-            title: Text("Gioco"),
           ),
           BubbleBottomBarItem(
             backgroundColor: Colors.indigo,
