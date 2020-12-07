@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   TextEditingController _usernameController;
   Socket socket;
+  List messages;
 
   @override
   void initState() {
@@ -67,7 +68,6 @@ class _HomePageState extends State<HomePage> {
     if (_usernameController.text.isEmpty) {
       return;
     }
-   // _openChatUsers(context);
     _startClient();
   }
 
@@ -76,28 +76,35 @@ class _HomePageState extends State<HomePage> {
       context,
       MaterialPageRoute(
         builder: (context) => ChatUsersScreen(
-          username: _usernameController.text, socket: socket,
+          username: _usernameController.text,
+          socket: socket, 
+          messages: messages,
         ),
       ),
     );
   }
 
   _startClient() {
-    print("Siamo fuori");  
-    Socket.connect('http://b7ce8e54bd30.ngrok.io/', 4567).then((Socket sock) {
-      print("Siamo dentro");
-      socket.listen(dataHandler,
-          onError: errorHandler, onDone: doneHandler, cancelOnError: false);
+    print("Siamo fuori");
+    Socket.connect('10.0.2.2', 4567).then((Socket sock) {
+      socket = sock;
+      socket.listen(
+        dataHandler,
+        onError: errorHandler,
+        onDone: doneHandler,
+        cancelOnError: false,
+      );
+      _openChatUsers(context);
     }).catchError((e) {
       print("Unable to connect: $e");
-      exit(1);
     });
- //  stdin.listen(
- //      (data) => socket.write(new String.fromCharCodes(data).trim() + '\n'));
+    //  stdin.listen(
+    //      (data) => socket.write(new String.fromCharCodes(data).trim() + '\n'));
   }
 
   void dataHandler(data) {
-    print(new String.fromCharCodes(data).trim());
+    print(String.fromCharCodes(data).trim());
+    messages.add(String.fromCharCodes(data).trim());
   }
 
   void errorHandler(error, StackTrace trace) {

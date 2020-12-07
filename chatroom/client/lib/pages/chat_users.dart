@@ -1,11 +1,14 @@
 import 'dart:io';
+import 'package:bubble/bubble.dart';
+import 'package:chatroom/pages/client.dart';
 import 'package:flutter/material.dart';
 
 class ChatUsersScreen extends StatefulWidget {
   final String username;
   final Socket socket;
+  final List messages;
 
-  ChatUsersScreen({Key key, @required this.username, @required this.socket})
+  ChatUsersScreen({Key key, @required this.username, @required this.socket, @required this.messages})
       : super(key: key);
 
   @override
@@ -14,6 +17,22 @@ class ChatUsersScreen extends StatefulWidget {
 
 class _ChatUsersScreenState extends State<ChatUsersScreen> {
   TextEditingController _messageController;
+
+  List<String> messages;
+
+  BubbleStyle styleSomebody = BubbleStyle(
+    nip: BubbleNip.leftTop,
+    color: Colors.white,
+    margin: BubbleEdges.only(top: 8.0, right: 50.0),
+    alignment: Alignment.topLeft,
+  );
+
+  BubbleStyle styleMe = BubbleStyle(
+    nip: BubbleNip.rightTop,
+    color: Color.fromARGB(255, 225, 255, 199),
+    margin: BubbleEdges.only(top: 8.0, left: 50.0),
+    alignment: Alignment.topRight,
+  );
 
   @override
   void initState() {
@@ -42,6 +61,7 @@ class _ChatUsersScreenState extends State<ChatUsersScreen> {
     );
   }
 
+  // lista con tutti i messaggi e poi lo butto fuori nel item builder
   _chatList() {
     return Expanded(
       child: Container(
@@ -50,7 +70,21 @@ class _ChatUsersScreenState extends State<ChatUsersScreen> {
           reverse: false,
           shrinkWrap: true,
           padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-          itemBuilder: (BuildContext context, int index) {},
+          itemCount: messages.length,
+          itemBuilder: (BuildContext context, int index) {
+            return buildSingleMessage(index);
+          },
+          //itemBuilder: (BuildContext context, int index) {
+          //  Bubble(
+          //    style: styleSomebody,
+          //    child: Text(
+          //        'Hi Jason. Sorry to bother you. I have a queston for you.'),
+          //  );
+          //  Bubble(
+          //    style: styleMe,
+          //    child: Text('Whats\'up?'),
+          //  );
+          //},
         ),
       ),
     );
@@ -65,10 +99,7 @@ class _ChatUsersScreenState extends State<ChatUsersScreen> {
           IconButton(
             icon: Icon(Icons.send),
             onPressed: () async {
-              print(_messageController.text);
-              stdin.listen(
-                (data) => widget.socket.write("ciao"),
-              );
+              _sendMessage();
             },
           ),
         ],
@@ -99,6 +130,31 @@ class _ChatUsersScreenState extends State<ChatUsersScreen> {
           fillColor: Colors.white,
           contentPadding: EdgeInsets.all(10.0),
           hintText: 'Type message...',
+        ),
+      ),
+    );
+  }
+
+  _sendMessage() {
+    print(_messageController.text);
+    widget.socket.write(_messageController.text);
+    _messageController.text = '';
+    this.setState(() => messages.add(_messageController.text));
+  }
+
+  Widget buildSingleMessage(int index) {
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        padding: const EdgeInsets.all(20.0),
+        margin: const EdgeInsets.only(bottom: 20.0, left: 20.0),
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Text(
+          messages[index],
+          style: TextStyle(color: Colors.white, fontSize: 15.0),
         ),
       ),
     );
