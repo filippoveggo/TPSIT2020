@@ -1,26 +1,27 @@
 import 'dart:io';
+import 'dart:convert';
 
 class ChatClient {
   Socket _socket;
   String _address;
   int _port;
-  
-  ChatClient(Socket s){
+
+  ChatClient(Socket s) {
     _socket = s;
     _address = _socket.remoteAddress.address;
     _port = _socket.remotePort;
 
     _socket.listen(messageHandler,
-        onError: errorHandler,
-        onDone: finishedHandler);
+        onError: errorHandler, onDone: finishedHandler);
   }
 
-  void messageHandler(data){
+  void messageHandler(data) {
     String message = new String.fromCharCodes(data).trim();
-    distributeMessage(this, '${_address}:${_port} Message: $message');
+    distributeMessage(this, jsonEncode(message));
+    print(message);
   }
 
-  void errorHandler(error){
+  void errorHandler(error) {
     print('${_address}:${_port} Error: $error');
     removeClient(this);
     _socket.close();
@@ -32,7 +33,7 @@ class ChatClient {
     _socket.close();
   }
 
-  void write(String message){
+  void write(String message) {
     _socket.write(message);
   }
 }
@@ -41,31 +42,28 @@ ServerSocket server;
 List<ChatClient> clients = [];
 
 void main() {
-  ServerSocket.bind(InternetAddress.anyIPv4, 4567)
-    .then((ServerSocket socket) {
-      server = socket;
-      server.listen((client) {
-        handleConnection(client);
-      });
+  ServerSocket.bind(InternetAddress.anyIPv4, 4567).then((ServerSocket socket) {
+    server = socket;
+    server.listen((client) {
+      handleConnection(client);
     });
+  });
 }
 
-void handleConnection(Socket client){
+void handleConnection(Socket client) {
   print('Connection from '
-    '${client.remoteAddress.address}:${client.remotePort}');
+      '${client.remoteAddress.address}:${client.remotePort}');
   clients.add(new ChatClient(client));
-  client.write("Welcome to dart-chat! "
-    "There are ${clients.length - 1} other clients\n");
 }
 
-void distributeMessage(ChatClient client, String message){
+void distributeMessage(ChatClient client, String message) {
   for (ChatClient c in clients) {
-    if (c != client){
+    if (c != client) {
       c.write(message + "\n");
     }
   }
 }
 
-void removeClient(ChatClient client){
+void removeClient(ChatClient client) {
   clients.remove(client);
 }
