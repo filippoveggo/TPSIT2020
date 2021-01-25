@@ -15,7 +15,7 @@ Per creare il server mi sono affidato alla classe Socket di dart, che permette l
 Per inizializzare il server si procede a inizializzare il socket all'indirizzo e alla porta che vogliamo dare al server. Il server così è pronto ad ascoltare tutte le chiamate. 
 
 Il codice per fare ciò:
-<img src="./../../images/Server.png">
+<img src="./images/Server.png">
 
 ---
 
@@ -29,7 +29,7 @@ Per inizializzare il client bisogna connettere il socket al socket del server, q
 Finita la configurazione si procede alla lettura dei dati contenuti nel server.
 
 Il codice per farlo:
-<img src="./../../images/Client.png">
+<img src="./images/Client.png">
 
 --- 
 
@@ -47,7 +47,7 @@ All'interno della chat puoi mandare messaggi e riceverli dagli eventuali altri u
 Il passaggio dei dati avviene mediante JSON che ha 2 key: il nome utente e il messaggio.
 
 Esempio di messaggio:
-<img src="./../../images/json.png">
+<img src="./images/json.png">
 
 Il modello usato per ogni messaggio è contenuto nel file "message_model.dart".
 
@@ -56,7 +56,7 @@ Il modello usato per ogni messaggio è contenuto nel file "message_model.dart".
 Per inviare i dati si utilizza il "message model" e lo si aggiunge alla lista di tutti i messaggi ricevuti/inviati.
 
 I messaggi sono dunque inviati in questo modo: 
-<img src="./../../images/message.png">
+<img src="./images/message.png">
 
 #### Grafica di ogni messaggio
 
@@ -64,10 +64,10 @@ Per mostrare ogni messaggio mi sono affidato alla libreria "bubble" di dart, che
 
 Per vedere se il messaggio è stato inviato o ricevuto si confronta l'username in questo modo:
 
-<img src="./../../images/if.png">
+<img src="./images/if.png">
 
 ---
 
 ## Risultato finale
 
-<img src="./../../images/bubble.png">
+<img src="./images/bubble.png">
