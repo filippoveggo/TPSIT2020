@@ -13,8 +13,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<LevelsWatcherBloc>(context);
+    BlocProvider.of<LevelsWatcherBloc>(context).add(LevelsReceived());
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
         child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Marea Attuale",
@@ -39,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                     } else if (state is LevelsWatcherFailure) {
                       return Text("Dati non caricati");
                     }
-                    return Text("Dati in caricamento");
+                    return Text("Dati in caricamento (errore)");
                   },
                 ),
               ],
@@ -52,24 +54,45 @@ class _HomePageState extends State<HomePage> {
     @required List<LevelDomainModel> levels,
   }) {
     print("object");
-    final currentTideStation =
-        levels.where((element) => element.order == 1).map((e) => e.station);
-    final currentTide =
-        levels.where((element) => element.order == 1).map((e) => e.value);
+    final currentTideStation = levels
+        .where((element) => element.nomeAbbr == "PS_Giud")
+        .map((e) => e.station);
+    final currentTide = levels
+        .where((element) => element.nomeAbbr == "PS_Giud")
+        .map((e) => e.value);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '$currentTideStation',
+          '${currentTideStation.first}',
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w300,
           ),
         ),
-        Text(
-          '$currentTide',
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.w600,
+        Padding(
+          padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
+          child: Row(
+            children: [
+              Text(
+                '${currentTide.first}',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(
+                width: 16,
+              ),
+              Container(
+                height: 32,
+                width: 32,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.black,
+                ),
+              ),
+            ],
           ),
         ),
       ],

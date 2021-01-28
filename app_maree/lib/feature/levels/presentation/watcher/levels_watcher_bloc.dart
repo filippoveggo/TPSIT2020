@@ -20,15 +20,22 @@ class LevelsWatcherBloc extends Bloc<LevelsWatcherEvent, LevelsWatcherState>{
   Stream<LevelsWatcherState> mapEventToState(
     LevelsWatcherEvent event,
   ) async* {
+    print(event);
     if (event is LevelsReceived) {
       yield LevelsWatcherLoading();
-      print("LevelsWatcherBloc");
-      final Resource<List<LevelDomainModel>> levels = await levelRepository.getLevels();
-      if (event.resource.status == Status.success) {
+      try {
+        final Resource<List<LevelDomainModel>> levels = await levelRepository.getLevels();
         yield LevelsWatcherLoaded(levels: levels.data);
-      } else if(event.resource.status == Status.failed){
-        yield LevelsWatcherFailure(failure: event.resource.failure);
+      } catch (_) {
+        yield LevelsWatcherFailure();
       }
+      //print("LevelsWatcherBloc");
+      //final Resource<List<LevelDomainModel>> levels = await levelRepository.getLevels();
+      //if (event == Status.success) {
+      //  yield LevelsWatcherLoaded(levels: levels.data);
+      //} else if(event.resource.status == Status.failed){
+      //  yield LevelsWatcherFailure(failure: event.resource.failure);
+      //}
     }
   }
 }

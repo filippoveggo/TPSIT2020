@@ -17,7 +17,6 @@ class LevelsWatcherLoaded extends LevelsWatcherState {
 }
 
 class LevelsWatcherFailure extends LevelsWatcherState {
-  final Failure failure;
-
-  LevelsWatcherFailure({@required this.failure});
+ //final Failure failure;
+ //LevelsWatcherFailure({@required this.failure});
 }

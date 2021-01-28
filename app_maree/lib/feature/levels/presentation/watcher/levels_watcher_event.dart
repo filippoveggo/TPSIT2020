@@ -5,9 +5,5 @@ abstract class LevelsWatcherEvent{
 }
 
 class LevelsReceived extends LevelsWatcherEvent{
-  final Resource<List<LevelDomainModel>> resource;
-
-  LevelsReceived({
-    @required this.resource,
-  }) : assert(resource != null);
+  LevelsReceived();
 }

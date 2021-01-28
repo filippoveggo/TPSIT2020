@@ -17,7 +17,6 @@ class LevelsRepositoryImpl implements LevelRepository {
       final remoteLevels = await levelsRemoteDatasource.getLevels();
       final domainModels =
           remoteLevels.map((e) => LevelDomainModel.fromRemoteModel(e)).toList();
-      print("LevelsRepositoryImpl");
       return Resource.success(data: domainModels);
     } catch (e) {
       print(e);

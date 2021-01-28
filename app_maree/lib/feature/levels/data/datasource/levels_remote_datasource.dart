@@ -14,7 +14,6 @@ class LevelsRemoteDatasource {
 
     List<LevelRemoteModel> levelsList = List<LevelRemoteModel>.from(
         response.data.map((i) => LevelRemoteModel.fromJson(i)));
-    print(levelsList.toString());
     return levelsList;
   }
 }
