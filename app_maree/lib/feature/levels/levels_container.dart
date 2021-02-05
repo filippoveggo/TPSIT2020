@@ -1,11 +1,13 @@
-
+import 'package:app_maree/feature/levels/presentation/watcher/levels_watcher_bloc.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'data/datasource/levels_remote_datasource.dart';
 import 'data/repository/levels_repository_impl.dart';
 import 'domain/repository/level_repository.dart';
 
-final sl = GetIt.instance;
+final GetIt sl = GetIt.instance;
 
 class LevelsContainer {
   static Future<void> init() async {
@@ -17,9 +19,14 @@ class LevelsContainer {
       ),
     );
   }
-  //static List<BlocProvider> getBlocProviders() {
-  //  return [
-  //    BlocProvider<LevelsWatcherBloc>(create: (BuildContext contex) => LevelsWatcherBloc())
-  //  ];
-  //}
+
+  static List<BlocProvider> getBlocProviders() {
+    return [
+      BlocProvider<LevelsWatcherBloc>(
+        create: (BuildContext contex) => LevelsWatcherBloc(
+          levelRepository: sl(),
+        ),
+      ),
+    ];
+  }
 }

@@ -1,24 +1,40 @@
 import 'package:app_maree/feature/home/home_page.dart';
 import 'package:app_maree/feature/levels/data/repository/levels_repository_impl.dart';
+import 'package:app_maree/feature/prediction/data/datasource/predictions_remote_datasource.dart';
+import 'package:app_maree/feature/prediction/data/repository/predictions_repository_impl.dart';
+import 'package:app_maree/feature/prediction/presentation/watcher/predictions_watcher_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'feature/levels/data/datasource/levels_remote_datasource.dart';
 import 'feature/levels/domain/repository/level_repository.dart';
 import 'feature/levels/presentation/watcher/levels_watcher_bloc.dart';
 
 void main() {
-  final LevelRepository levelRepository = LevelsRepositoryImpl(levelsRemoteDatasource: LevelsRemoteDatasource(dio: Dio()));
+  final LevelRepository levelRepository = LevelsRepositoryImpl(
+      levelsRemoteDatasource: LevelsRemoteDatasource(dio: Dio()));
+  final PredictionsRepositoryImpl predictionRepository =
+      PredictionsRepositoryImpl(
+          predictionsRemoteDatasource: PredictionsRemoteDatasource(dio: Dio()));
+
   // trasparent status bar
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
 
   runApp(
-    BlocProvider(
-      create: (BuildContext context) => LevelsWatcherBloc(levelRepository: levelRepository),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (BuildContext context) =>
+              LevelsWatcherBloc(levelRepository: levelRepository),
+        ),
+        BlocProvider(
+          create: (BuildContext context) => PredictionsWatcherBloc(
+              predictionRepository: predictionRepository),
+        ),
+      ],
       child: MyApp(),
     ),
   );

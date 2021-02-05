@@ -1,5 +1,6 @@
 import 'package:app_maree/feature/levels/domain/model/level_domain_model.dart';
 import 'package:app_maree/feature/levels/presentation/watcher/levels_watcher_bloc.dart';
+import 'package:app_maree/feature/prediction/presentation/watcher/predictions_watcher_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,38 +15,72 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     BlocProvider.of<LevelsWatcherBloc>(context).add(LevelsReceived());
+    BlocProvider.of<PredictionsWatcherBloc>(context).add(PredictionsReceived());
+    //Timer.periodic(Duration(seconds: 5), (Timer t) => BlocProvider.of<LevelsWatcherBloc>(context).add(LevelsReceived()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Marea Attuale",
-                  style: TextStyle(
-                    fontSize: 34,
-                    fontWeight: FontWeight.bold,
-                  ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+              child: Text(
+                "Marea Attuale",
+                style: TextStyle(
+                  fontSize: 34,
+                  fontWeight: FontWeight.bold,
                 ),
-                BlocBuilder<LevelsWatcherBloc, LevelsWatcherState>(
-                  builder: (context, state) {
-                    print(state);
-                    if (state is LevelsWatcherLoaded) {
-                      print("state");
-                      return buildCurrentTide(levels: state.levels);
-                    } else if (state is LevelsWatcherFailure) {
-                      return Text("Dati non caricati");
-                    }
-                    return Text("Dati in caricamento (errore)");
-                  },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+              child: BlocBuilder<LevelsWatcherBloc, LevelsWatcherState>(
+                builder: (context, state) {
+                  print(state);
+                  if (state is LevelsWatcherLoaded) {
+                    print("state");
+                    return buildCurrentTide(levels: state.levels);
+                  } else if (state is LevelsWatcherFailure) {
+                    return Text("Dati non caricati");
+                  }
+                  return Text("Dati in caricamento (errore)");
+                },
+              ),
+            ),
+            Divider(
+              color: Colors.white,
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+              child: Text(
+                "La marea di oggi",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w500,
                 ),
-              ],
-            )),
+              ),
+            ),
+            //Padding(
+            //  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
+            //  child: BlocBuilder<PredictionsWatcherBloc,PredictionsWatcherEvent>(
+            //    builder: (context, state) {
+            //      print(state);
+            //      if (state is PredictionsWatcherLoaded) {
+            //        print("state");
+            //        return Text("ciao");
+            //      } else if (state is LevelsWatcherFailure) {
+            //        return Text("Dati non caricati");
+            //      }
+            //      return Text("Dati in caricamento (errore)");
+            //    },
+            //  ),
+            //),
+          ],
+        ),
       ),
     );
   }
@@ -71,7 +106,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 8.0),
+          padding: const EdgeInsets.fromLTRB(0, 8.0, 0, 0.0),
           child: Row(
             children: [
               Text(

@@ -5,9 +5,5 @@ abstract class PredictionsWatcherEvent {
 }
 
 class PredictionsReceived extends PredictionsWatcherEvent {
-  final Resource<List<PredictionDomainModel>> resource;
-
-  PredictionsReceived({
-    @required this.resource,
-  });
+  PredictionsReceived();
 }

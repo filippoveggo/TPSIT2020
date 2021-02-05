@@ -1,3 +1,6 @@
+import 'package:app_maree/feature/prediction/presentation/watcher/predictions_watcher_bloc.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'data/datasource/predictions_remote_datasource.dart';
@@ -16,9 +19,14 @@ class PredictionsContainer {
       ),
     );
   }
-  //static List<BlocProvider> getBlocProviders() {
-  //  return [
-  //    BlocProvider<PredictionsWatcherBloc>(create: (BuildContext contex) => PredictionsWatcherBloc())
-  //  ];
-  //}
+
+  static List<BlocProvider> getBlocProviders() {
+    return [
+      BlocProvider<PredictionsWatcherBloc>(
+        create: (BuildContext contex) => PredictionsWatcherBloc(
+          predictionRepository: sl(),
+        ),
+      ),
+    ];
+  }
 }
