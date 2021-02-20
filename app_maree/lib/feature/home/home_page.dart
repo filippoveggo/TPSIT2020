@@ -1,3 +1,4 @@
+import 'package:app_maree/feature/home/widget/tide_chart.dart';
 import 'package:app_maree/feature/levels/domain/model/level_domain_model.dart';
 import 'package:app_maree/feature/levels/presentation/watcher/levels_watcher_bloc.dart';
 import 'package:app_maree/feature/prediction/presentation/watcher/predictions_watcher_bloc.dart';
@@ -64,6 +65,14 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+
+            // Da trovare il metodo per vedere la marea delle prossime ore
+            TideChart(),
+
+            Divider(
+              color: Colors.white,
+            ),
+
             //Padding(
             //  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 8.0),
             //  child: BlocBuilder<PredictionsWatcherBloc,PredictionsWatcherEvent>(
@@ -91,10 +100,12 @@ class _HomePageState extends State<HomePage> {
     print("object");
     final currentTideStation = levels
         .where((element) => element.nomeAbbr == "PS_Giud")
-        .map((e) => e.station);
+        .map((e) => e.station)
+        .toList();
     final currentTide = levels
         .where((element) => element.nomeAbbr == "PS_Giud")
-        .map((e) => e.value);
+        .map((e) => e.value)
+        .toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

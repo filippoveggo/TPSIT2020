@@ -11,10 +11,15 @@ class PredictionsRepositoryImpl extends PredictionRepository {
     @required this.predictionsRemoteDatasource,
   });
 
-  Future<Resource<List<PredictionDomainModel>>> getPredictions() async{
+  Future<Resource<List<PredictionDomainModel>>> getPredictions() async {
     try {
-      final remotePredictions = await predictionsRemoteDatasource.getPredictions();
-      final domainModels = remotePredictions.map((e) => PredictionDomainModel.fromRemoteModel(e));
+      final remotePredictions =
+          await predictionsRemoteDatasource.getPredictions();
+      final domainModels = remotePredictions
+          .map(
+            (e) => PredictionDomainModel.fromRemoteModel(e),
+          )
+          .toList();
       return Resource.success(data: domainModels);
     } catch (e) {
       print(e);
