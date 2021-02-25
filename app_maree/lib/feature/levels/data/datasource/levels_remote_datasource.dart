@@ -10,10 +10,9 @@ class LevelsRemoteDatasource {
   });
 
   Future<List<LevelRemoteModel>> getLevels() async {
-    final response = await dio.get('https://dati.venezia.it/sites/default/files/dataset/opendata/livello.json');
-
-    List<LevelRemoteModel> levelsList = List<LevelRemoteModel>.from(
-        response.data.map((i) => LevelRemoteModel.fromJson(i)));
-    return levelsList;
+    //final response = await dio.get('https://dati.venezia.it/sites/default/files/dataset/opendata/livello.json');
+    //List<LevelRemoteModel> levelsList = List<LevelRemoteModel>.from(
+    //    response.data.map((i) => LevelRemoteModel.fromJson(i)));
+    //return levelsList;
   }
 }

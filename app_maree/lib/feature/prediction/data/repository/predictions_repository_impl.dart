@@ -22,7 +22,6 @@ class PredictionsRepositoryImpl extends PredictionRepository {
           .toList();
       return Resource.success(data: domainModels);
     } catch (e) {
-      print(e);
       return Resource.failed(error: e);
     }
   }

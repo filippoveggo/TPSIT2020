@@ -49,4 +49,40 @@ class LevelRemoteModel {
     data['valore'] = this.valore;
     return data;
   }
+
+  @override
+  String toString() {
+    String toString = '{' +
+        'ordine=' +
+        this.ordine +
+        ',' +
+        'idStazione=' +
+        this.iDStazione +
+        ',' +
+        'latDDN=' +
+        this.latDDN +
+        ',' +
+        'nomeAbbr=' +
+        this.nomeAbbr +
+        ',' +
+        'latDMSN=' +
+        this.latDMSN +
+        ',' +
+        'lonDMSE=' +
+        this.lonDMSE +
+        ',' +
+        'latDDN=' +
+        this.latDDN +
+        ',' +
+        'lonDDE=' +
+        this.lonDDE +
+        ',' +
+        'data=' +
+        this.data +
+        ',' +
+        'valore=' +
+        this.valore +
+        '}';
+    return toString;
+  }
 }

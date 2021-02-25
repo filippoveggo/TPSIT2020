@@ -22,7 +22,6 @@ class PredictionsWatcherBloc
   Stream<PredictionsWatcherState> mapEventToState(
     PredictionsWatcherEvent event,
   ) async* {
-    print(event);
     if (event is PredictionsReceived) {
       yield PredictionsWatcherLoading();
       try {

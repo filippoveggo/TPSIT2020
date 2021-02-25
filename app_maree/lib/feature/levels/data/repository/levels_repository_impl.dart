@@ -25,7 +25,6 @@ class LevelsRepositoryImpl implements LevelRepository {
       );
       return Resource.success(data: domainModels);
     } catch (e) {
-      print(e);
       return Resource.failed(error: e);
     }
   }
