@@ -34,24 +34,54 @@ class _NextHoursTideState extends State<NextHoursTide> {
     );
   }
 
-  Widget _buildNextHoursTideList({
+  NotificationListener<OverscrollIndicatorNotification>
+      _buildNextHoursTideList({
     @required List<PredictionDomainModel> predictions,
   }) {
-    // todo: Make this a list view with at least 5 items
-    return Column(
-      children: [
-        /// todo: Change date format
-        Text(predictions.elementAt(0).extremeDate.toString()),
-        Container(
-          height: 32,
-          width: 32,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: GlobalUtils.getColorFromTideValue(predictions.elementAt(0).value),
-          ),
+    return NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (overscroll) {
+        overscroll.disallowGlow();
+        return;
+      },
+      child: SizedBox(
+        height: 90,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: [
+            ...List.generate(
+              // The number is indicative, with this you can see only one day predictions
+              predictions.length - 9,
+              (index) {
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 8.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(GlobalUtils.getHourFromDate(
+                            predictions.elementAt(index).extremeDate)),
+                      ),
+                      Container(
+                        height: 32,
+                        width: 32,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: GlobalUtils.getColorFromTideValue(
+                              predictions.elementAt(index).value),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(predictions.elementAt(index).value + ' cm'),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ],
         ),
-        Text(predictions.elementAt(0).value),
-      ],
+      ),
     );
   }
 }
