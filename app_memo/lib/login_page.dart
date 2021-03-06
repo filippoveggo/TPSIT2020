@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               controller: passText,
               obscureText: true,
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Container(
                 height: 50.0,
                 child: Center(
