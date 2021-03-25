@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "956812619025",
+    "project_id": "app-memo-e4f5e",
+    "storage_bucket": "app-memo-e4f5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956812619025:android:260d9e388d99aae74170b0",
+        "android_client_info": {
+          "package_name": "com.example.app_memo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "956812619025-0lm8fnacqii8b8c26lb7eim59eqrasai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.app_memo",
+            "certificate_hash": "6b300c0e3e9484a4b192129d13d9dfa82f916710"
+          }
+        },
+        {
+          "client_id": "956812619025-gf5jat8c4052c7u4tabbag8546bvf3ht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3XJpzW747z7_CqiJl3InKpRUPu_YZ3Eo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "956812619025-gf5jat8c4052c7u4tabbag8546bvf3ht.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "956812619025-pjmp4hh4mfu70pbflolslbgsaqhqjc68.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.appMemo"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
