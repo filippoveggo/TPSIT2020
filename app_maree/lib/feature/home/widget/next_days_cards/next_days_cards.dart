@@ -17,7 +17,7 @@ class _NextDaysCardsState extends State<NextDaysCards> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PredictionsWatcherBloc>(context).add(PredictionsReceived());
+    //BlocProvider.of<PredictionsWatcherBloc>(context).add(PredictionsReceived());
   }
 
   @override
@@ -42,45 +42,79 @@ class _NextDaysCardsState extends State<NextDaysCards> {
 Widget _buildNextDaysCards({
   @required List<PredictionDomainModel> predictions,
 }) {
-  // Remember to start the list from +1 (next day)
-  return Card(
-    elevation: 2,
-    child: Column(
+  return SizedBox(
+    height: 170,
+    child: ListView(
+      scrollDirection: Axis.vertical,
       children: [
-        NextDayTitle(predictions: predictions),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SizedBox(
-            height: 80,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                ...List.generate(
-                  3,
-                  (index) {
-                    return Row(
-                      children: [
-                        Icon(Icons.keyboard_arrow_down),
-                        Column(
-                          children: [
-                            Text(GlobalUtils.getHourFromDate(
-                                GlobalUtils.getPredictionWithSameDate(
-                                        index, predictions)[index]
-                                    .extremeDate)),
-                          ],
-                        ),
-                      ],
-                    );
-                    //Text(index.toString());
-                    //print(predictions.where((element) => element.extremeDate.day == DateTime.now().day + index).toList().toString());
-                    //predictions.where((element) => element.extremeDate.day == DateTime.now().day + index).toList();
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
+        _buildCard(predictions: predictions),
       ],
+    ),
+  );
+}
+
+Widget _buildCard({
+  @required List<PredictionDomainModel> predictions,
+}) {
+  // Remember to start the list from +1 (next day)
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+    child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      elevation: 2,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            NextDayTitle(predictions: predictions),
+            SizedBox(
+              height: 32,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  ...List.generate(
+                    3,
+                    (index) {
+                      return Row(
+                        //crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(Icons.keyboard_arrow_down),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 16.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  GlobalUtils.getPredictionWithSameDate(
+                                        predictions,
+                                        DateTime.now(),
+                                      )[index]
+                                          .value +
+                                      ' cm',
+                                ),
+                                Text(
+                                  GlobalUtils.getHourFromDate(
+                                    GlobalUtils.getPredictionWithSameDate(
+                                      predictions,
+                                      DateTime.now(),
+                                    )[index]
+                                        .extremeDate,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     ),
   );
   //Text('per ora');

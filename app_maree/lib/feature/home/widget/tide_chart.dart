@@ -73,7 +73,9 @@ class _TideChartState extends State<TideChart> {
           gridData: FlGridData(
             show: false,
           ),
-          titlesData: FlTitlesData(show: false),
+          titlesData: FlTitlesData(
+            show: false,
+          ),
           borderData: FlBorderData(show: false),
         ),
       ),

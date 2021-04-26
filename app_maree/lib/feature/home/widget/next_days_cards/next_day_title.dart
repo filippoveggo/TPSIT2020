@@ -10,18 +10,43 @@ class NextDayTitle extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Padding build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(bottom: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               /// todo: change to DateTime.now + one day
-              Text(GlobalUtils.getDayNameFromDate(
-                  predictions.elementAt(1).extremeDate)),
-              Text(predictions.elementAt(1).value),
+              Text(
+                GlobalUtils.getDayNameFromDate(
+                  GlobalUtils.getPredictionWithSameDate(
+                    predictions,
+                    DateTime.now(),
+                  )[0]
+                      .extremeDate,
+                ),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              Text(
+                GlobalUtils.getTideDescriptionFromTideValue(
+                  GlobalUtils.getPredictionWithSameDate(
+                    predictions,
+                    DateTime.now(),
+                  )[0]
+                      .value,
+                ),
+                style: TextStyle(
+                  color: Color.fromRGBO(255, 255, 255, 0.6),
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
             ],
           ),
           Container(

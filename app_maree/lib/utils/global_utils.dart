@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:app_maree/feature/prediction/domain/model/prediction_domain_model.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -30,6 +28,25 @@ class GlobalUtils {
       color = Color.fromRGBO(237, 57, 60, 1.0);
     }
     return color;
+  }
+
+  static String getTideDescriptionFromTideValue(String value) {
+    double doubleValue = double.parse(value);
+    String description;
+    if (doubleValue <= -90.0) {
+      description = "Bassa marea eccezionale";
+    } else if (doubleValue > -90.0 && doubleValue <= -50.0) {
+      description = "Meno del normale";
+    } else if (doubleValue > -50.0 && doubleValue <= 80.0) {
+      description = "Normale";
+    } else if (doubleValue > 80.0 && doubleValue <= 110.0) {
+      description = "Sostenuta";
+    } else if (doubleValue > 110.0 && doubleValue <= 140.0) {
+      description = "Molto sostenuta";
+    } else if (doubleValue > 140.0) {
+      description = "Eccezionale";
+    }
+    return description;
   }
 
   static String getHourFromDate(DateTime date) {
@@ -71,13 +88,25 @@ class GlobalUtils {
     return "";
   }
 
-  static List<PredictionDomainModel> getPredictionWithSameDate(int index, List<PredictionDomainModel> predictions){
-    print(predictions.where((element) => element.extremeDate.day == DateTime.now().day + 1).toList());
-    return predictions.where((element) => element.extremeDate.day == DateTime.now().day + 1).toList();
+  static List<PredictionDomainModel> getPredictionWithSameDate(
+    List<PredictionDomainModel> predictions, DateTime date
+  ) {
+    print("Inzio + 1");
+    print(predictions
+        .where((element) => element.extremeDate.day == date.day + 1)
+        .toList());
+    print("Fine");
+    print("Inzio non + 1");
+    print(predictions
+        .where((element) => element.extremeDate.day == date.day)
+        .toList());
+    print("Fine");
+    return predictions
+        .where((element) => element.extremeDate.day == date.day + 1)
+        .toList();
   }
 
-  static int getNumberOfPredictionByDate(DateTime date){
-    
+  static int getNumberOfPredictionByDate(DateTime date) {
     return 2;
   }
 }

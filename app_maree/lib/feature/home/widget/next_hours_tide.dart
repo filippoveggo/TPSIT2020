@@ -44,7 +44,7 @@ class _NextHoursTideState extends State<NextHoursTide> {
         return;
       },
       child: SizedBox(
-        height: 90,
+        height: 102,
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
@@ -58,8 +58,14 @@ class _NextHoursTideState extends State<NextHoursTide> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(GlobalUtils.getHourFromDate(
-                            predictions.elementAt(index).extremeDate)),
+                        child: Text(
+                          GlobalUtils.getHourFromDate(
+                              predictions.elementAt(index).extremeDate),
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
                       Container(
                         height: 32,
@@ -72,7 +78,13 @@ class _NextHoursTideState extends State<NextHoursTide> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(predictions.elementAt(index).value + ' cm'),
+                        child: Text(
+                          predictions.elementAt(index).value + ' cm',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
                     ],
                   ),
