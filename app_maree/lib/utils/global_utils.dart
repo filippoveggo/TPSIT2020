@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:app_maree/feature/prediction/domain/model/prediction_domain_model.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 
 class GlobalUtils {
@@ -6,7 +9,7 @@ class GlobalUtils {
     //Initial List example: "[-0.45 m]"
     double myDouble = double.parse(toConvert.first.split(" ").first) * 100;
     //At this point myDouble is "-45.0"
-    String converted = myDouble.toString();
+    String converted = myDouble.toStringAsFixed(0);
     //At this point myDouble is "-45.0"
     return converted;
   }
@@ -50,7 +53,8 @@ class GlobalUtils {
   }
 
   static String getHourFromDate(DateTime date) {
-    String hour = date.hour.toString() + ':' + date.minute.toString();
+    String hour =
+        date.hour.toString() + ':' + date.minute.toString().padRight(2, '0');
     return hour.toString();
   }
 
@@ -89,8 +93,7 @@ class GlobalUtils {
   }
 
   static List<PredictionDomainModel> getPredictionWithSameDate(
-    List<PredictionDomainModel> predictions, DateTime date
-  ) {
+      List<PredictionDomainModel> predictions, DateTime date) {
     print("Inzio + 1");
     print(predictions
         .where((element) => element.extremeDate.day == date.day + 1)
@@ -106,7 +109,16 @@ class GlobalUtils {
         .toList();
   }
 
-  static int getNumberOfPredictionByDate(DateTime date) {
-    return 2;
+  static List<FlSpot> getSpotsMaxValue(
+      List<PredictionDomainModel> predictions) {
+    List<FlSpot> spots = [];
+    for (double i = 0; i < predictions.length; i++) {
+      if (predictions[i.toInt()].extremeType.toLowerCase() == 'max') {
+        spots.add(
+          FlSpot(i, double.parse(predictions[i.toInt()].value)),
+        );
+      }
+    }
+    return spots;
   }
 }

@@ -44,12 +44,7 @@ Widget _buildNextDaysCards({
 }) {
   return SizedBox(
     height: 170,
-    child: ListView(
-      scrollDirection: Axis.vertical,
-      children: [
-        _buildCard(predictions: predictions),
-      ],
-    ),
+    child: _buildCard(predictions: predictions),
   );
 }
 

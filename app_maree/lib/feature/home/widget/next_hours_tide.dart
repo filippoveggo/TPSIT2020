@@ -50,7 +50,7 @@ class _NextHoursTideState extends State<NextHoursTide> {
           children: [
             ...List.generate(
               // The number is indicative, with this you can see only one day predictions
-              predictions.length - 9,
+              predictions.length - 6,
               (index) {
                 return Padding(
                   padding: const EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 8.0),
