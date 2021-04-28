@@ -43,8 +43,15 @@ Widget _buildNextDaysCards({
   @required List<PredictionDomainModel> predictions,
 }) {
   return SizedBox(
-    height: 170,
-    child: _buildCard(predictions: predictions),
+    height: 450,
+    child: ListView.builder(
+      //physics: NeverScrollableScrollPhysics(),
+      itemCount: 3,
+      itemBuilder: (context, index) {
+        return _buildCard(predictions: predictions);
+      },
+    ),
+    //_buildCard(predictions: predictions),
   );
 }
 
@@ -53,7 +60,7 @@ Widget _buildCard({
 }) {
   // Remember to start the list from +1 (next day)
   return Padding(
-    padding: const EdgeInsets.fromLTRB(15.0, 0.0, 15.0, 0.0),
+    padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0.0),
     child: Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
@@ -65,7 +72,7 @@ Widget _buildCard({
           children: [
             NextDayTitle(predictions: predictions),
             SizedBox(
-              height: 32,
+              height: 34,
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -103,6 +110,7 @@ Widget _buildCard({
                         ],
                       );
                     },
+                    //scrollDirection: Axis.horizontal,
                   ),
                 ],
               ),

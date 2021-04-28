@@ -15,8 +15,21 @@ class _TideChartState extends State<TideChart> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<PredictionsWatcherBloc>(context).add(PredictionsReceived());
   }
+
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return const Color.fromRGBO(122, 122, 122, 0.5);
+    }
+    return Colors.red;
+  }
+
+  bool showAvg = false;
 
   List<Color> uniqueColor = [
     const Color.fromRGBO(122, 122, 122, 1),
@@ -43,43 +56,109 @@ class _TideChartState extends State<TideChart> {
     );
   }
 
-  AspectRatio buildChart({
+  Stack buildChart({
     @required List<PredictionDomainModel> predictions,
   }) {
-    List<FlSpot> spots = GlobalUtils.getSpotsMaxValue(predictions);
-    //for (double i = 0.0; i < predictions.length; i++) {
-    //  spots.add(FlSpot(i, double.parse(predictions[i.toInt()].value)));
-    //}
-    return AspectRatio(
-      aspectRatio: 2.5,
-      child: LineChart(
-        LineChartData(
-          lineBarsData: [
-            LineChartBarData(
-              spots: spots,
-              colors: uniqueColor,
-              isCurved: true,
-              dotData: FlDotData(
-                show: false,
-              ),
-              belowBarData: BarAreaData(
-                show: true,
-                colors: gradientColors,
-                gradientColorStops: [0.5, 1.0],
-                gradientFrom: const Offset(0, 0),
-                gradientTo: const Offset(0, 1),
-              ),
-            ),
-          ],
-          gridData: FlGridData(
-            show: false,
+    return Stack(
+      alignment: AlignmentDirectional.topEnd,
+      children: <Widget>[
+        AspectRatio(
+          aspectRatio: 2.5,
+          child: LineChart(
+            showAvg ? avgData(predictions) : mainData(predictions),
           ),
-          titlesData: FlTitlesData(
-            show: false,
-          ),
-          borderData: FlBorderData(show: false),
         ),
+        SizedBox(
+          width: 60,
+          height: 34,
+          child: TextButton(
+            onPressed: () {
+              setState(() {
+                showAvg = !showAvg;
+              });
+            },
+            child: showAvg
+                ? Text(
+                    'min',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: showAvg
+                          ? Colors.white.withOpacity(0.5)
+                          : Colors.white,
+                    ),
+                  )
+                : Text(
+                    'max',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: showAvg
+                          ? Colors.white.withOpacity(0.5)
+                          : Colors.white,
+                    ),
+                  ),
+            style: ButtonStyle(
+                overlayColor: MaterialStateProperty.resolveWith(getColor)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  LineChartData mainData(List<PredictionDomainModel> predictions) {
+    return LineChartData(
+      lineBarsData: [
+        LineChartBarData(
+          spots: GlobalUtils.getSpotsMaxValue(predictions),
+          colors: uniqueColor,
+          isCurved: true,
+          dotData: FlDotData(
+            show: false,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            colors: gradientColors,
+            gradientColorStops: [0.5, 1.0],
+            gradientFrom: const Offset(0, 0),
+            gradientTo: const Offset(0, 1),
+          ),
+        ),
+      ],
+      gridData: FlGridData(
+        show: false,
       ),
+      titlesData: FlTitlesData(
+        show: false,
+      ),
+      borderData: FlBorderData(show: false),
+    );
+  }
+
+  LineChartData avgData(List<PredictionDomainModel> predictions) {
+    return LineChartData(
+      lineBarsData: [
+        LineChartBarData(
+          spots: GlobalUtils.getSpotsMinValue(predictions),
+          colors: uniqueColor,
+          isCurved: true,
+          dotData: FlDotData(
+            show: false,
+          ),
+          belowBarData: BarAreaData(
+            show: true,
+            colors: gradientColors,
+            gradientColorStops: [0.5, 1.0],
+            gradientFrom: const Offset(0, 0),
+            gradientTo: const Offset(0, 1),
+          ),
+        ),
+      ],
+      gridData: FlGridData(
+        show: false,
+      ),
+      titlesData: FlTitlesData(
+        show: false,
+      ),
+      borderData: FlBorderData(show: false),
     );
   }
 }

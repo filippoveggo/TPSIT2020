@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:app_maree/feature/prediction/domain/model/prediction_domain_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
@@ -94,16 +92,16 @@ class GlobalUtils {
 
   static List<PredictionDomainModel> getPredictionWithSameDate(
       List<PredictionDomainModel> predictions, DateTime date) {
-    print("Inzio + 1");
-    print(predictions
-        .where((element) => element.extremeDate.day == date.day + 1)
-        .toList());
-    print("Fine");
-    print("Inzio non + 1");
-    print(predictions
-        .where((element) => element.extremeDate.day == date.day)
-        .toList());
-    print("Fine");
+    //print("Inzio + 1");
+    //print(predictions
+    //    .where((element) => element.extremeDate.day == date.day + 1)
+    //    .toList());
+    //print("Fine");
+    //print("Inzio non + 1");
+    //print(predictions
+    //    .where((element) => element.extremeDate.day == date.day)
+    //    .toList());
+    //print("Fine");
     return predictions
         .where((element) => element.extremeDate.day == date.day + 1)
         .toList();
@@ -114,6 +112,19 @@ class GlobalUtils {
     List<FlSpot> spots = [];
     for (double i = 0; i < predictions.length; i++) {
       if (predictions[i.toInt()].extremeType.toLowerCase() == 'max') {
+        spots.add(
+          FlSpot(i, double.parse(predictions[i.toInt()].value)),
+        );
+      }
+    }
+    return spots;
+  }
+
+  static List<FlSpot> getSpotsMinValue(
+      List<PredictionDomainModel> predictions) {
+    List<FlSpot> spots = [];
+    for (double i = 0; i < predictions.length; i++) {
+      if (predictions[i.toInt()].extremeType.toLowerCase() == 'min') {
         spots.add(
           FlSpot(i, double.parse(predictions[i.toInt()].value)),
         );

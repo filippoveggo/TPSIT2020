@@ -11,6 +11,21 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            label: 'Mappa',
+          ),
+        ],
+        backgroundColor: Color.fromRGBO(22, 22, 22, 1.0),
+        selectedItemColor: Color.fromRGBO(10, 132, 255, 1.0),
+        unselectedItemColor: Color.fromRGBO(117, 117, 117, 1.0),
+      ),
       body: SafeArea(
         child: NotificationListener<OverscrollIndicatorNotification>(
           onNotification: (overscroll) {
