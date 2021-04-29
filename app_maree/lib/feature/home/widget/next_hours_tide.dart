@@ -44,54 +44,49 @@ class _NextHoursTideState extends State<NextHoursTide> {
         return;
       },
       child: SizedBox(
-        height: 102,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            ...List.generate(
-              // The number is indicative, with this you can see only one day predictions
-              predictions.length - 6,
-              (index) {
-                return Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 8.0),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          GlobalUtils.getHourFromDate(
-                              predictions.elementAt(index).extremeDate),
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
+        height: 104,
+        child: ListView.builder(
+          itemCount: predictions.length - 6,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 8.0),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(
+                      GlobalUtils.getHourFromDate(
+                          predictions.elementAt(index).extremeDate),
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
                       ),
-                      Container(
-                        height: 32,
-                        width: 32,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: GlobalUtils.getColorFromTideValue(
-                              predictions.elementAt(index).value),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          predictions.elementAt(index).value + ' cm',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                );
-              },
-            ),
-          ],
+                  Container(
+                    height: 32,
+                    width: 32,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: GlobalUtils.getColorFromTideValue(
+                          predictions.elementAt(index).value),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      predictions.elementAt(index).value + ' cm',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          scrollDirection: Axis.horizontal,
         ),
       ),
     );
