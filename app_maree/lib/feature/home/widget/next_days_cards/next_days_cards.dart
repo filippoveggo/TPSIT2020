@@ -2,6 +2,7 @@ import 'package:app_maree/feature/home/widget/next_days_cards/next_day_title.dar
 import 'package:app_maree/feature/prediction/domain/model/prediction_domain_model.dart';
 import 'package:app_maree/feature/prediction/presentation/watcher/predictions_watcher_bloc.dart';
 import 'package:app_maree/utils/global_utils.dart';
+import 'package:floor/floor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -43,7 +44,11 @@ Widget _buildNextDaysCards({
   @required List<PredictionDomainModel> predictions,
 }) {
   return SizedBox(
+<<<<<<< HEAD
     height: 450,
+=======
+    height: 138,
+>>>>>>> bae3b466a7b3906ebb9ef0e1d2f2841f45891f2c
     child: ListView.builder(
       //physics: NeverScrollableScrollPhysics(),
       itemCount: 3,
