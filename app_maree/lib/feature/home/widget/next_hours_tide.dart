@@ -46,7 +46,7 @@ class _NextHoursTideState extends State<NextHoursTide> {
       child: SizedBox(
         height: 104,
         child: ListView.builder(
-          itemCount: predictions.length - 6,
+          itemCount: predictions.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 8.0),

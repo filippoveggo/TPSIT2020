@@ -25,8 +25,7 @@ class PredictionsWatcherBloc
     if (event is PredictionsReceived) {
       yield PredictionsWatcherLoading();
       try {
-        final Resource<List<PredictionDomainModel>> predictions =
-            await predictionRepository.getPredictions();
+        final predictions = await predictionRepository.getPredictions();
         yield PredictionsWatcherLoaded(predictions: predictions.data);
       } catch (_) {
         yield PredictionsWatcherFailure();

@@ -1,5 +1,6 @@
 import 'package:app_maree/feature/home/home_page.dart';
 import 'package:app_maree/feature/levels/data/repository/levels_repository_impl.dart';
+import 'package:app_maree/feature/map/next_days_page.dart';
 import 'package:app_maree/feature/prediction/data/datasource/predictions_remote_datasource.dart';
 import 'package:app_maree/feature/prediction/data/repository/predictions_repository_impl.dart';
 import 'package:app_maree/feature/prediction/presentation/watcher/predictions_watcher_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'feature/levels/data/datasource/levels_remote_datasource.dart';
 import 'feature/levels/domain/repository/level_repository.dart';
 import 'feature/levels/presentation/watcher/levels_watcher_bloc.dart';
+import 'feature/prediction/presentation/map_watcher/predictions_map_watcher_bloc.dart';
 
 void main() {
   final LevelRepository levelRepository = LevelsRepositoryImpl(
@@ -34,6 +36,11 @@ void main() {
           create: (BuildContext context) => PredictionsWatcherBloc(
               predictionRepository: predictionRepository),
         ),
+        BlocProvider(
+          create: (BuildContext context) => PredictionsMapWatcherBloc(
+            predictionRepository: predictionRepository,
+          ),
+        ),
       ],
       child: MyApp(),
     ),
@@ -46,84 +53,61 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0x0),
+        // scaffoldBackgroundColor: const Color(0x0),
         brightness: Brightness.dark,
         //textTheme: GoogleFonts.poppinsTextTheme(),
         fontFamily: 'Poppins',
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: MyBottomNavigationBar(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class MyBottomNavigationBar extends StatefulWidget {
+  MyBottomNavigationBar({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  _MyHomePageState();
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+  int _currentIndex = 0;
+  void changePage(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          HomePage(),
+          MapPage(),
+        ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            BlocBuilder<LevelsWatcherBloc, LevelsWatcherState>(
-              builder: (context, state) {
-                if (state is LevelsWatcherLoaded) {
-                  // return Text(state.rooms.length.toString());
-                  if (state.levels.length == 0) {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 4.0,
-                      ),
-                    );
-                  }
-                  //return ListView.builder(
-                  //  itemCount: state.levels.length,
-                  //  itemBuilder: (context, i) =>
-                  //      new Text(state.levels.map((e) => e.nomeAbbr).elementAt(i)),
-                  //);
-                  //return ListView(
-                  //  children: [
-                  //    Text(state.levels.map((e) => e.nomeAbbr)),
-                  //  ],
-                  //);
-                } else if (state is LevelsWatcherFailure) {
-                  return Center(
-                    child: Icon(Icons.error),
-                  );
-                }
-
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
-            )
-            //FutureBuilder(
-            //  future: LevelsRepositoryImpl(levelsRemoteDatasource: LevelsRemoteDatasource(dio: Dio())).getLevels(),
-            //  initialData: Resource.loading<List<LevelDomainModel>>(),
-            //  builder: (BuildContext context, AsyncSnapshot<Resource<List<LevelDomainModel>>> snapshot) {
-            //    if(snapshot.data.status == Status.success) {
-            //      return Text(snapshot.data.data[0].station);
-            //    }
-            //    return CircularProgressIndicator();
-            //  },
-            //),
-          ],
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: changePage,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.view_day),
+            label: 'Prossimi giorni',
+          ),
+        ],
+        backgroundColor: Color.fromRGBO(22, 22, 22, 1.0),
+        selectedItemColor: Color.fromRGBO(10, 132, 255, 1.0),
+        unselectedItemColor: Color.fromRGBO(117, 117, 117, 1.0),
       ),
     );
   }

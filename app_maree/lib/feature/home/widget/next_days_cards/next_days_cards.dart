@@ -1,5 +1,6 @@
 import 'package:app_maree/feature/home/widget/next_days_cards/next_day_title.dart';
 import 'package:app_maree/feature/prediction/domain/model/prediction_domain_model.dart';
+import 'package:app_maree/feature/prediction/presentation/map_watcher/predictions_map_watcher_bloc.dart';
 import 'package:app_maree/feature/prediction/presentation/watcher/predictions_watcher_bloc.dart';
 import 'package:app_maree/utils/global_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,21 +18,25 @@ class _NextDaysCardsState extends State<NextDaysCards> {
   @override
   void initState() {
     super.initState();
-    //BlocProvider.of<PredictionsWatcherBloc>(context).add(PredictionsReceived());
+    BlocProvider.of<PredictionsMapWatcherBloc>(context)
+        .add(GetPredictionsMap());
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Container(
-        child: BlocBuilder<PredictionsWatcherBloc, PredictionsWatcherState>(
+        child:
+            BlocBuilder<PredictionsMapWatcherBloc, PredictionsMapWatcherState>(
           builder: (context, state) {
-            if (state is PredictionsWatcherLoaded) {
-              return _buildNextDaysCards(predictions: state.predictions);
-            } else if (state is PredictionsWatcherFailure) {
+            if (state is PredictionsMapWatcherLoaded) {
+              return _buildNextDaysCards(predictions: state.map);
+            } else if (state is PredictionsMapWatcherFailure) {
               return Text("Dati non caricati");
             }
-            return Text("Dati in caricamento (errore)");
+            return Center(
+              child: CircularProgressIndicator(),
+            );
           },
         ),
       ),
@@ -40,25 +45,49 @@ class _NextDaysCardsState extends State<NextDaysCards> {
 }
 
 Widget _buildNextDaysCards({
-  @required List<PredictionDomainModel> predictions,
+  @required Map<DateTime, List<PredictionDomainModel>> predictions,
 }) {
   return SizedBox(
     height: 450,
     child: ListView.builder(
-      //physics: NeverScrollableScrollPhysics(),
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return _buildCard(predictions: predictions);
+      itemCount: predictions.keys.length,
+      itemBuilder: (BuildContext context, int index) {
+        final predictionsForThisDay =
+            predictions[predictions.keys.elementAt(index)];
+        //return Text(predictions.keys.elementAt(index).toString());
+
+        return _buildCard(predictions: predictionsForThisDay);
       },
     ),
-    //_buildCard(predictions: predictions),
   );
+  //return SizedBox(
+  //  height: 450,
+  //  child: ListView.builder(
+  //    //physics: NeverScrollableScrollPhysics(),
+  //    itemCount: 3,
+  //    itemBuilder: (context, index) {
+  //      return _buildCard(predictions: predictions);
+  //    },
+  //  ),
+  //  //_buildCard(predictions: predictions),
+  //);
 }
 
 Widget _buildCard({
   @required List<PredictionDomainModel> predictions,
 }) {
   // Remember to start the list from +1 (next day)
+  return Card(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    elevation: 2,
+    child: Column(
+      children: [
+        Text(GlobalUtils.getDayNameFromDate(predictions[0].extremeDate)),
+      ],
+    ),
+  );
   return Padding(
     padding: const EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 0.0),
     child: Card(
@@ -88,21 +117,15 @@ Widget _buildCard({
                             child: Column(
                               children: [
                                 Text(
-                                  GlobalUtils.getPredictionWithSameDate(
-                                        predictions,
-                                        DateTime.now(),
-                                      )[index]
-                                          .value +
-                                      ' cm',
+                                  GlobalUtils.getPredictionsByDate(
+                                          predictions, DateTime.now())[index][0]
+                                      .extremeDate
+                                      .toString(),
                                 ),
                                 Text(
-                                  GlobalUtils.getHourFromDate(
-                                    GlobalUtils.getPredictionWithSameDate(
-                                      predictions,
-                                      DateTime.now(),
-                                    )[index]
-                                        .extremeDate,
-                                  ),
+                                  GlobalUtils.getPredictionsByDate(predictions,
+                                          DateTime.now())[index][index]
+                                      .value,
                                 ),
                               ],
                             ),
