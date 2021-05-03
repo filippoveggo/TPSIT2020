@@ -2,30 +2,22 @@ import 'package:app_maree/feature/home/widget/current_tide.dart';
 import 'package:app_maree/feature/home/widget/next_days_cards/next_days_cards.dart';
 import 'package:app_maree/feature/home/widget/next_hours_tide.dart';
 import 'package:app_maree/feature/home/widget/tide_chart.dart';
+import 'package:app_maree/feature/map/next_days_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: 'Mappa',
-          ),
-        ],
-        backgroundColor: Color.fromRGBO(22, 22, 22, 1.0),
-        selectedItemColor: Color.fromRGBO(10, 132, 255, 1.0),
-        unselectedItemColor: Color.fromRGBO(117, 117, 117, 1.0),
-      ),
       body: SafeArea(
         child: NotificationListener<OverscrollIndicatorNotification>(
           onNotification: (overscroll) {

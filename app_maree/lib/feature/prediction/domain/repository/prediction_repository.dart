@@ -3,6 +3,6 @@ import 'package:app_maree/feature/prediction/domain/model/prediction_domain_mode
 
 abstract class PredictionRepository {
 
-  Future<Resource<List<PredictionDomainModel>>> getPredictions();
+  Future<Resource<Map<DateTime, List<PredictionDomainModel>>>> getPredictions();
 
 }

@@ -2,7 +2,6 @@ import 'package:app_maree/feature/home/widget/next_days_cards/next_day_title.dar
 import 'package:app_maree/feature/prediction/domain/model/prediction_domain_model.dart';
 import 'package:app_maree/feature/prediction/presentation/watcher/predictions_watcher_bloc.dart';
 import 'package:app_maree/utils/global_utils.dart';
-import 'package:floor/floor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,23 +40,28 @@ class _NextDaysCardsState extends State<NextDaysCards> {
 }
 
 Widget _buildNextDaysCards({
-  @required List<PredictionDomainModel> predictions,
+  @required Map<DateTime, List<PredictionDomainModel>> predictions,
 }) {
-  return SizedBox(
-<<<<<<< HEAD
-    height: 450,
-=======
-    height: 138,
->>>>>>> bae3b466a7b3906ebb9ef0e1d2f2841f45891f2c
-    child: ListView.builder(
-      //physics: NeverScrollableScrollPhysics(),
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return _buildCard(predictions: predictions);
-      },
-    ),
-    //_buildCard(predictions: predictions),
+
+  return ListView.builder(
+    itemCount: predictions.keys.length,
+    itemBuilder: (BuildContext context, int index) {
+      final predictionsForThisDay = predictions[predictions.keys.elementAt(index)];
+      
+    return _buildCard(predictions: predictionsForThisDay);
+   },
   );
+  //return SizedBox(
+  //  height: 450,
+  //  child: ListView.builder(
+  //    //physics: NeverScrollableScrollPhysics(),
+  //    itemCount: 3,
+  //    itemBuilder: (context, index) {
+  //      return _buildCard(predictions: predictions);
+  //    },
+  //  ),
+  //  //_buildCard(predictions: predictions),
+  //);
 }
 
 Widget _buildCard({
@@ -93,21 +97,10 @@ Widget _buildCard({
                             child: Column(
                               children: [
                                 Text(
-                                  GlobalUtils.getPredictionWithSameDate(
-                                        predictions,
-                                        DateTime.now(),
-                                      )[index]
-                                          .value +
-                                      ' cm',
+                                  GlobalUtils.getPredictionsByDate(predictions, DateTime.now())[index][0].extremeDate.toString(),
                                 ),
                                 Text(
-                                  GlobalUtils.getHourFromDate(
-                                    GlobalUtils.getPredictionWithSameDate(
-                                      predictions,
-                                      DateTime.now(),
-                                    )[index]
-                                        .extremeDate,
-                                  ),
+                                  GlobalUtils.getPredictionsByDate(predictions, DateTime.now())[index][index].value,
                                 ),
                               ],
                             ),

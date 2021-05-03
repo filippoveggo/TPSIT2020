@@ -31,6 +31,12 @@ class GlobalUtils {
     return color;
   }
 
+  static bool areSameDay(DateTime date1, DateTime date2) {
+    return date1.day == date2.day &&
+        date1.month == date2.month &&
+        date1.year == date2.year;
+  }
+
   static String getTideDescriptionFromTideValue(String value) {
     double doubleValue = double.parse(value);
     String description;
@@ -105,6 +111,28 @@ class GlobalUtils {
     return predictions
         .where((element) => element.extremeDate.day == date.day + 1)
         .toList();
+  }
+
+  static List<List<PredictionDomainModel>> getPredictionsByDate(
+      List<PredictionDomainModel> predictions, DateTime date) {
+    //print("Inzio + 1");
+    //print(predictions
+    //    .where((element) => element.extremeDate.day == date.day + 1)
+    //    .toList());
+    //print("Fine");
+    //print("Inzio non + 1");
+    //print(predictions
+    //    .where((element) => element.extremeDate.day == date.day)
+    //    .toList());
+    //print("Fine");
+    List<List<PredictionDomainModel>> results = [];
+    for (var i = 0; i < 3; i++) {
+      results.add(predictions
+          .where((element) => element.extremeDate.day == date.day + i)
+          .toList());
+    }
+    print(results.toString());
+    return results;
   }
 
   static List<FlSpot> getSpotsMaxValue(

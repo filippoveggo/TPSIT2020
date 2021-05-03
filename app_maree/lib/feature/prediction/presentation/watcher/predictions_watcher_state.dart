@@ -10,7 +10,7 @@ class PredictionsWatcherInitial extends PredictionsWatcherState {}
 class PredictionsWatcherLoading extends PredictionsWatcherState {}
 
 class PredictionsWatcherLoaded extends PredictionsWatcherState {
-  final List<PredictionDomainModel> predictions;
+  final Map<DateTime, List<PredictionDomainModel>> predictions;
   PredictionsWatcherLoaded({
     @required this.predictions,
   }) : assert(predictions != null);
