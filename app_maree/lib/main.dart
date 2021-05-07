@@ -1,6 +1,5 @@
 import 'package:app_maree/feature/home/home_page.dart';
 import 'package:app_maree/feature/levels/data/repository/levels_repository_impl.dart';
-import 'package:app_maree/feature/map/next_days_page.dart';
 import 'package:app_maree/feature/prediction/data/datasource/predictions_remote_datasource.dart';
 import 'package:app_maree/feature/prediction/data/repository/predictions_repository_impl.dart';
 import 'package:app_maree/feature/prediction/presentation/watcher/predictions_watcher_bloc.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'feature/levels/data/datasource/levels_remote_datasource.dart';
 import 'feature/levels/domain/repository/level_repository.dart';
 import 'feature/levels/presentation/watcher/levels_watcher_bloc.dart';
+import 'feature/next_days/next_days_page.dart';
 import 'feature/prediction/presentation/map_watcher/predictions_map_watcher_bloc.dart';
 
 void main() {
@@ -89,7 +89,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         index: _currentIndex,
         children: [
           HomePage(),
-          MapPage(),
+          NextDayPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

@@ -7,38 +7,49 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class NextDaysCards extends StatefulWidget {
-  NextDaysCards({Key key}) : super(key: key);
+class NextDayPage extends StatefulWidget {
+  NextDayPage({Key key}) : super(key: key);
 
   @override
-  _NextDaysCardsState createState() => _NextDaysCardsState();
+  _NextDayPageState createState() => _NextDayPageState();
 }
 
-class _NextDaysCardsState extends State<NextDaysCards> {
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<PredictionsMapWatcherBloc>(context)
-        .add(GetPredictionsMap());
-  }
-
+class _NextDayPageState extends State<NextDayPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Container(
-        child:
-            BlocBuilder<PredictionsMapWatcherBloc, PredictionsMapWatcherState>(
-          builder: (context, state) {
-            if (state is PredictionsMapWatcherLoaded) {
-              return _buildNextDaysCards(predictions: state.map);
-            } else if (state is PredictionsMapWatcherFailure) {
-              return Text("Dati non caricati");
-            }
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
+    return NotificationListener<OverscrollIndicatorNotification>(
+      onNotification: (overscroll) {
+        overscroll.disallowGlow();
+        return;
+      },
+      child: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+            child: Text(
+              "Prossimi Giorni",
+              style: TextStyle(
+                fontSize: 34,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Container(
+            child: BlocBuilder<PredictionsMapWatcherBloc,
+                PredictionsMapWatcherState>(
+              builder: (context, state) {
+                if (state is PredictionsMapWatcherLoaded) {
+                  return _buildNextDaysCards(predictions: state.map);
+                } else if (state is PredictionsMapWatcherFailure) {
+                  return Text("Dati non caricati");
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -47,9 +58,9 @@ class _NextDaysCardsState extends State<NextDaysCards> {
     @required Map<DateTime, List<PredictionDomainModel>> predictions,
   }) {
     return SizedBox(
-      height: 450,
+      height: 600,
       child: ListView.builder(
-        itemCount: predictions.keys.length - 2,
+        itemCount: predictions.keys.length - 1,
         itemBuilder: (BuildContext context, int index) {
           final predictionsForThisDay =
               predictions[predictions.keys.elementAt(index + 1)];

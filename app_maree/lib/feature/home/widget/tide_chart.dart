@@ -50,7 +50,7 @@ class _TideChartState extends State<TideChart> {
           } else if (state is PredictionsWatcherFailure) {
             return Text("Dati non caricati");
           }
-          return Text("Dati in caricamento (errore)");
+          return CircularProgressIndicator();
         },
       ),
     );

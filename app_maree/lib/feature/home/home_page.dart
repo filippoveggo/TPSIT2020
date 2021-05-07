@@ -2,7 +2,7 @@ import 'package:app_maree/feature/home/widget/current_tide.dart';
 import 'package:app_maree/feature/home/widget/next_days_cards/next_days_cards.dart';
 import 'package:app_maree/feature/home/widget/next_hours_tide.dart';
 import 'package:app_maree/feature/home/widget/tide_chart.dart';
-import 'package:app_maree/feature/map/next_days_page.dart';
+import 'package:app_maree/feature/next_days/next_days_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+                padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -80,10 +79,19 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Icon(
-                      Icons.keyboard_arrow_right,
-                      color: Color.fromRGBO(10, 132, 255, 1.0),
-                    )
+                    IconButton(
+                      icon: Icon(
+                        Icons.keyboard_arrow_right,
+                        color: Color.fromRGBO(10, 132, 255, 1.0),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => NextDayPage(),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

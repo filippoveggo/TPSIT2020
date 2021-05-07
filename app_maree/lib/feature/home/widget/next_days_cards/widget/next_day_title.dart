@@ -22,11 +22,7 @@ class NextDayTitle extends StatelessWidget {
               /// todo: change to DateTime.now + one day
               Text(
                 GlobalUtils.getDayNameFromDate(
-                  GlobalUtils.getPredictionWithSameDate(
-                    predictions,
-                    DateTime.now(),
-                  )[0]
-                      .extremeDate,
+                  predictions.elementAt(0).extremeDate,
                 ),
                 style: TextStyle(
                   fontSize: 20,
@@ -35,11 +31,7 @@ class NextDayTitle extends StatelessWidget {
               ),
               Text(
                 GlobalUtils.getTideDescriptionFromTideValue(
-                  GlobalUtils.getPredictionWithSameDate(
-                    predictions,
-                    DateTime.now(),
-                  )[0]
-                      .value,
+                  predictions.elementAt(0).value,
                 ),
                 style: TextStyle(
                   color: Color.fromRGBO(255, 255, 255, 0.6),

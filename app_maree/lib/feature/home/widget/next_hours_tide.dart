@@ -2,6 +2,7 @@ import 'package:app_maree/feature/prediction/domain/model/prediction_domain_mode
 import 'package:app_maree/feature/prediction/presentation/watcher/predictions_watcher_bloc.dart';
 import 'package:app_maree/utils/global_utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NextHoursTide extends StatefulWidget {
@@ -28,7 +29,7 @@ class _NextHoursTideState extends State<NextHoursTide> {
           } else if (state is PredictionsWatcherFailure) {
             return Text("Dati non caricati");
           }
-          return Text("Dati in caricamento (errore)");
+          return CircularProgressIndicator();
         },
       ),
     );

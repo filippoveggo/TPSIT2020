@@ -3,6 +3,7 @@ import 'package:app_maree/feature/prediction/data/datasource/predictions_remote_
 import 'package:app_maree/feature/prediction/domain/model/prediction_domain_model.dart';
 import 'package:app_maree/feature/prediction/domain/repository/prediction_repository.dart';
 import 'package:app_maree/utils/global_utils.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 
 class PredictionsRepositoryImpl extends PredictionRepository {
@@ -12,7 +13,8 @@ class PredictionsRepositoryImpl extends PredictionRepository {
     @required this.predictionsRemoteDatasource,
   });
 
-  Future<Resource<List<PredictionDomainModel>>> getPredictions() async {
+  Future<Resource<List<PredictionDomainModel>>>
+      getPredictions() async {
     try {
       final remotePredictions =
           await predictionsRemoteDatasource.getPredictions();
@@ -40,15 +42,16 @@ class PredictionsRepositoryImpl extends PredictionRepository {
           )
           .toList();
 
-      final Map<DateTime, List<PredictionDomainModel>> map = Map.fromIterable(
+      final predictionsMap = groupBy<PredictionDomainModel, DateTime>(
         domainModels,
-        key: (k) => domainModels.where((element) => element.extremeDate == k.extremeDate),
-        value: (v) => domainModels
-            .where((m) => GlobalUtils.areSameDay(m.extremeDate, v.extremeDate))
-            .toList(),
+        (e) => DateTime(
+          e.extremeDate.year,
+          e.extremeDate.month,
+          e.extremeDate.day
+        )
       );
 
-      return Resource.success(data: map);
+      return Resource.success(data: predictionsMap);
     } catch (e) {
       return Resource.failed(error: e);
     }

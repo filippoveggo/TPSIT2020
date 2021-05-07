@@ -30,7 +30,7 @@ class _CurrentTideState extends State<CurrentTide> {
           } else if (state is LevelsWatcherFailure) {
             return Text("Dati non caricati");
           }
-          return Text("Dati in caricamento (errore)");
+          return CircularProgressIndicator();
         },
       ),
     );
