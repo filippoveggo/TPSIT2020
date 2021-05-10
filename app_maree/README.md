@@ -1,5 +1,10 @@
 # App Maree
- 
+
+## UML
+
+Questo è il diagramma uml del progetto
+<img src="/images/AppMareeUml.png">
+
 ## Struttura del progetto
 
 In questo progetto è stata implementata una versione customizzata della clean architecture.
