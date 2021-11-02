@@ -18,7 +18,7 @@ class NextDayDesciption extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: [
           ...List.generate(
-            4,
+            3,
             (index) {
               return Row(
                 children: [

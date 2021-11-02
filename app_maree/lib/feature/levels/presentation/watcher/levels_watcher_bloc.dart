@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_maree/core/exceptions/failures.dart';
 import 'package:app_maree/core/generics/resource.dart';
 import 'package:app_maree/feature/levels/domain/model/level_domain_model.dart';
 import 'package:app_maree/feature/levels/domain/repository/level_repository.dart';
